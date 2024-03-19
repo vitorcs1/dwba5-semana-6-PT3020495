@@ -57,3 +57,16 @@ def index():
                            remote_addr=session.get('remote_addr'),
                            remote_host=session.get('host'),
                            current_time=datetime.utcnow())
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        usuario = request.form['nome']
+        return redirect(url_for('loginResponsive', name=usuario))
+    return render_template('login.html',
+                           current_time=datetime.utcnow())
+
+@app.route('/login-responsive/<name>', methods=['GET'])
+def loginResponsive(name):
+    usuario=name
+    return render_template('login_responsive.html', usuario=usuario,current_time=datetime.utcnow())
